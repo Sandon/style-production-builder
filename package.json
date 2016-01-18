@@ -1,7 +1,7 @@
 {
   "name": "webpack-production-builder",
   "description": "webpack production builder",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "bin": {
     "wpb": "bin/build"
   },
