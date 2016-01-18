@@ -11,7 +11,7 @@ var outputDir = process.argv[5];
 /*
  * task : copy
  */
-gulp.task('copy', [ 'clean' ], function () {
+gulp.task('copy', function () {
   return gulp.src(Path.resolve(inputDir, './**/*.*'))
     .pipe(gulp.dest(outputDir));
 });
