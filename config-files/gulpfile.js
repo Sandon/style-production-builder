@@ -12,7 +12,7 @@ var outputDir = process.argv[5];
 /*
  * task : copy
  */
-gulp.task('copy', function () {
+gulp.task('copy', [ 'clean' ], function () {
   return gulp.src(Path.resolve(inputDir, './**/*.*'))
     .pipe(gulp.dest(outputDir));
 });
@@ -59,6 +59,6 @@ gulp.task('clean', function (cb) {
 /*
  * task : default
  */
-gulp.task('default', ['clean'], function () {
-  gulp.start('copy', 'scripts', 'less', 'css');
+gulp.task( 'default', [ 'copy' ], function () {
+  gulp.start( 'scripts', 'less', 'css' );
 });
