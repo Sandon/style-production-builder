@@ -39,43 +39,44 @@ var getHelpInfo = function () {
   ].join('\n');
 };
 
-var parsed = nopt(knownOpts, shortHands, argv);
+var parsed = nopt( knownOpts, shortHands, argv );
 
-if (parsed.help || !parsed.input || !parsed.output) {
-  console.log(getHelpInfo());
+if ( parsed.help || !parsed.input || !parsed.output ) {
+  console.log( getHelpInfo() );
   return;
 }
 
-var inputDir = Path.resolve(process.cwd(), parsed.input);
-var outputDir = Path.resolve(process.cwd(), parsed.output);
+var cwd = process.cwd();
+var inputDir = Path.resolve( cwd, parsed.input );
+var outputDir = Path.resolve( cwd, parsed.output );
 
 // var tmpDir = Path.join(__dirname, '.build-tmp');
 
 /*
  * Step2 : execute gulp
  */
-if (fs.existsSync(outputDir)) {
-  console.log(outputDir + ' already exists, now removing ...');
-  fileDirUtils.rmDir(outputDir);
+if ( fs.existsSync( outputDir ) ) {
+  console.log( outputDir + ' already exists, now removing ...' );
+  fileDirUtils.rmDir( outputDir );
 }
 
 var modulesBase = Path.join(__dirname, '../node_modules');
 var gulpFile = Path.join(__dirname, '../config-files/gulpfile.js');
-var buildTask = spawn('node', [modulesBase + '/gulp/bin/gulp', '--inputdir', inputDir, '--outdir', outputDir, '--gulpfile', gulpFile]);
+var buildTask = spawn( 'node', [ modulesBase + '/gulp/bin/gulp', '--inputdir', inputDir, '--outdir', outputDir, '--gulpfile', gulpFile ] );
 
 buildTask.stdout.on('data', function (data) {
-  data = data.slice(0, data.length - 1);
-  console.log(data.toString());
+  data = data.slice( 0, data.length - 1 );
+  console.log( data.toString() );
 });
 
 buildTask.stderr.on('data', function (data) {
-  console.log(data.toString());
+  console.log( data.toString() );
 });
 
 buildTask.on('close', function (code) {
-  if (code !== 0) {
-    console.error('build error : child process exited with code ' + code);
+  if ( code !== 0 ) {
+    console.error( 'build error : child process exited with code ' + code );
   } else {
-    console.log('gulp compile finished')
+    console.log( 'gulp compile finished' )
   }
 });
