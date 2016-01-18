@@ -3,11 +3,11 @@
   "description": "webpack production builder",
   "version": "0.1.0",
   "bin": {
-    "build": "bin/build"
+    "wpb": "bin/build"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Sandon/webpack-production-builder.git"
   },
   "keywords": [
     "webpack",
