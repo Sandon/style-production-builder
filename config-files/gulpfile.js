@@ -2,7 +2,6 @@ var gulp = require('gulp'),
   less = require('gulp-less'),
   minifycss = require('gulp-minify-css'),
   uglify = require('gulp-uglify'),
-  notify = require('gulp-notify'),
   del = require('del'),
   Path = require('path');
 
