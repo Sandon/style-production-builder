@@ -5,8 +5,6 @@ var gulp = require('gulp'),
   del = require('del'),
   Path = require('path'),
   gutil = require('gulp-util'),
-  browserify = require('browserify'),
-  babelify= require('babelify'),
   babel = require("gulp-babel");
 
 var inputDir = process.argv[3];
