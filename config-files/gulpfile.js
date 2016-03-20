@@ -3,7 +3,11 @@ var gulp = require('gulp'),
   minifycss = require('gulp-minify-css'),
   uglify = require('gulp-uglify'),
   del = require('del'),
-  Path = require('path');
+  Path = require('path'),
+  gutil = require('gulp-util'),
+  browserify = require('browserify'),
+  babelify= require('babelify'),
+  babel = require("gulp-babel");
 
 var inputDir = process.argv[3];
 var outputDir = process.argv[5];
@@ -41,11 +45,17 @@ gulp.task('css', function () {
 /*
  * task : scripts
  */
-gulp.task('scripts', function () {
-  return gulp.src(Path.resolve(inputDir, './**/*.js'))
-    .pipe(uglify())
+/*gulp.task('scripts', function () {
+  return gulp.src(Path.resolve(inputDir, './!**!/!*.js'))
+    .pipe(uglify({mangle: false}).on('error', gutil.log))
     .pipe(gulp.dest(outputDir));
   //.pipe(notify({ message: 'Scripts task complete' }));
+});*/
+gulp.task('scripts', function () {
+  return gulp.src(Path.resolve(inputDir, './**/*.js'))
+    .pipe(babel())
+    .pipe(uglify().on('error', gutil.log))
+    .pipe(gulp.dest(outputDir));
 });
 
 /*
@@ -59,5 +69,5 @@ gulp.task('clean', function (cb) {
  * task : default
  */
 gulp.task( 'default', [ 'copy' ], function () {
-  gulp.start( 'scripts', 'less', 'css' );
+  gulp.start( 'scripts', 'css' );
 });
