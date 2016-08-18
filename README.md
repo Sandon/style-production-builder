@@ -18,3 +18,9 @@ or
 
 `wpb --help`
 
+### Issues
+If you use react or ES2015, errors may be reported when compiling code
+with `wpb`. In this situation, you should install `babel-preset-react`
+or `babel-preset-es2015` in the parent or higher directory of the code
+file
+
