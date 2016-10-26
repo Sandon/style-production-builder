@@ -1,5 +1,5 @@
 {
-  "name": "production-builder",
+  "name": "webpack-production-builder",
   "description": "production builder",
   "version": "0.0.10",
   "bin": {
