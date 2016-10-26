@@ -1,4 +1,8 @@
 # webpack-production-builder
+    At first I wanted to make it a 'webpack production builder'. But 
+    then, I decided to leave the compiling function to developers' 
+    local implementation so developers can use Webpack, rollup or anything else. 
+    In the end, this builder is just a minifying and uglification tool based on gulp.
 
 ## Install
 `npm install webpack-production-builder -g`

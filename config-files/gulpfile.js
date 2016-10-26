@@ -1,6 +1,5 @@
 var gulp = require('gulp'),
-  less = require('gulp-less'),
-  minifycss = require('gulp-minify-css'),
+  cleanCSS = require('gulp-clean-css'),
   uglify = require('gulp-uglify'),
   del = require('del'),
   Path = require('path'),
@@ -21,21 +20,21 @@ gulp.task('copy', function () {
 /*
  * task : less
  */
-gulp.task('less', function () {
-  return gulp.src(Path.resolve(inputDir, './**/*.less'))
+/*gulp.task('less', function () {
+  return gulp.src(Path.resolve(inputDir, './!**!/!*.less'))
     .pipe(gulp.dest(outputDir))
     .pipe(less())
     .pipe(minifycss())
     .pipe(gulp.dest(outputDir));
   //.pipe(notify({ message: 'less task complete' }));
-});
+});*/
 
 /*
  * task : css
  */
 gulp.task('css', function () {
   return gulp.src(Path.resolve(inputDir, './**/*.css'))
-    .pipe(minifycss())
+    .pipe(cleanCSS({compatibility: 'ie8'}))
     .pipe(gulp.dest(outputDir));
   //.pipe(notify({ message: 'css task complete' }));
 });

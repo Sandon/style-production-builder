@@ -1,7 +1,7 @@
 {
-  "name": "webpack-production-builder",
-  "description": "webpack production builder",
-  "version": "0.0.9",
+  "name": "production-builder",
+  "description": "production builder",
+  "version": "0.0.10",
   "bin": {
     "wpb": "bin/build"
   },
@@ -10,7 +10,6 @@
     "url": "https://github.com/Sandon/webpack-production-builder.git"
   },
   "keywords": [
-    "webpack",
     "style",
     "compile",
     "tools"
@@ -20,14 +19,14 @@
     "email": "the_sandon@hotmail.com"
   },
   "dependencies": {
-    "gulp": "^3.9.0",
-    "gulp-less": "^3.0.3",
-    "gulp-minify-css": "^1.2.1",
-    "gulp-uglify": "^1.5.3",
-    "nopt": "^3.0.4",
-    "del": "^2.2.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-3": "^6.17.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-clean-css": "^2.0.13",
+    "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
-    "babel-preset-es2015": "^6.6.0"
+    "nopt": "^3.0.6"
   }
 }
