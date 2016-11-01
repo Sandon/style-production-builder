@@ -1,0 +1,9 @@
+{
+  "compileIgnore": [
+    "**/*.min.js",
+    "**/*.min.css"
+  ],
+  "totalIgnore": [
+    "**/src/*.*"
+  ]
+}

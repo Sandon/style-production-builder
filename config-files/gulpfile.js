@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
   cleanCSS = require('gulp-clean-css'),
   uglify = require('gulp-uglify'),
+  filter = require('gulp-filter'),
   del = require('del'),
   Path = require('path'),
   gutil = require('gulp-util'),
@@ -8,6 +9,7 @@ var gulp = require('gulp'),
 
 var inputDir = process.argv[3];
 var outputDir = process.argv[5];
+//var staticIgnoreFile = Path.resolve(inputDir, './staticignore.json')
 
 /*
  * task : copy
@@ -49,11 +51,14 @@ gulp.task('css', function () {
   //.pipe(notify({ message: 'Scripts task complete' }));
 });*/
 gulp.task('scripts', function () {
+  var filters = ['**/*.min.js']
+  var jsFilter = filter(filters)
   return gulp.src(Path.resolve(inputDir, './**/*.js'))
+    .pipe(jsFilter)
     .pipe(babel())
     .pipe(uglify().on('error', gutil.log))
     .pipe(gulp.dest(outputDir));
-});
+})
 
 /*
  * task : clean
