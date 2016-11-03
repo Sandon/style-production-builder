@@ -4,18 +4,48 @@ var gulp = require('gulp'),
   filter = require('gulp-filter'),
   del = require('del'),
   Path = require('path'),
+  fs = require('fs'),
   gutil = require('gulp-util'),
   babel = require("gulp-babel");
 
 var inputDir = process.argv[3];
 var outputDir = process.argv[5];
-//var staticIgnoreFile = Path.resolve(inputDir, './staticignore.json')
+
+var staticIgnoreFile = Path.resolve(inputDir, './.staticignore.json')
+var compileIgnore, completelyIgnore, allIgnores
+var completelyIgnoreFilterPattern = ["**/*.*"]
+var allIgnoresFilterPattern = ["**/*.*"]
+try {
+  var staticIgnore = fs.readFileSync(staticIgnoreFile, 'utf8');
+  staticIgnore = JSON.parse(staticIgnore)
+  compileIgnore = staticIgnore.compileIgnore || []
+  completelyIgnore = staticIgnore.completelyIgnore || []
+  
+  compileIgnore = compileIgnore.map(function (item) {
+    return '!' + item
+  })
+  completelyIgnore = completelyIgnore.map(function (item) {
+    return '!' + item
+  })
+  
+  allIgnores = compileIgnore.concat(completelyIgnore)
+  
+  allIgnoresFilterPattern = allIgnoresFilterPattern.concat(allIgnores)
+  completelyIgnoreFilterPattern = completelyIgnoreFilterPattern.concat(completelyIgnore)
+} catch (e) {
+  console.log('no .staticignore.json')
+}
+
+/*
+ * change working directory for gulp tasks
+ */
+process.chdir(inputDir)
 
 /*
  * task : copy
  */
 gulp.task('copy', function () {
-  return gulp.src(Path.resolve(inputDir, './**/*.*'))
+  return gulp.src(completelyIgnoreFilterPattern)
     .pipe(gulp.dest(outputDir));
 });
 
@@ -35,7 +65,9 @@ gulp.task('copy', function () {
  * task : css
  */
 gulp.task('css', function () {
-  return gulp.src(Path.resolve(inputDir, './**/*.css'))
+  var cssFilter = filter(allIgnoresFilterPattern)
+  return gulp.src('**/*.css')
+    .pipe(cssFilter)
     .pipe(cleanCSS({compatibility: 'ie8'}))
     .pipe(gulp.dest(outputDir));
   //.pipe(notify({ message: 'css task complete' }));
@@ -51,9 +83,9 @@ gulp.task('css', function () {
   //.pipe(notify({ message: 'Scripts task complete' }));
 });*/
 gulp.task('scripts', function () {
-  var filters = ['**/*.min.js']
-  var jsFilter = filter(filters)
-  return gulp.src(Path.resolve(inputDir, './**/*.js'))
+  var jsFilter = filter(allIgnoresFilterPattern)
+  //jsFilter = filter("**/*.min.js")
+  return gulp.src('**/*.js')
     .pipe(jsFilter)
     .pipe(babel())
     .pipe(uglify().on('error', gutil.log))
@@ -70,6 +102,11 @@ gulp.task('clean', function (cb) {
 /*
  * task : default
  */
-gulp.task( 'default', [ 'copy' ], function () {
+/*gulp.task( 'default', function () {
+  console.log(staticIgnore.compileIgnore)
+});
+ */
+gulp.task('default', ['copy'], function () {
   gulp.start( 'scripts', 'css' );
 });
+

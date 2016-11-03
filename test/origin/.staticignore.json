@@ -3,7 +3,7 @@
     "**/*.min.js",
     "**/*.min.css"
   ],
-  "totalIgnore": [
-    "**/src/*.*"
+  "completelyIgnore": [
+    "**/src/**"
   ]
 }
