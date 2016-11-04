@@ -84,7 +84,6 @@ gulp.task('css', function () {
 });*/
 gulp.task('scripts', function () {
   var jsFilter = filter(allIgnoresFilterPattern)
-  //jsFilter = filter("**/*.min.js")
   return gulp.src('**/*.js')
     .pipe(jsFilter)
     .pipe(babel())
@@ -101,10 +100,6 @@ gulp.task('clean', function (cb) {
 
 /*
  * task : default
- */
-/*gulp.task( 'default', function () {
-  console.log(staticIgnore.compileIgnore)
-});
  */
 gulp.task('default', ['copy'], function () {
   gulp.start( 'scripts', 'css' );
