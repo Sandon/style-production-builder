@@ -22,6 +22,23 @@ or
 
 `wpb --help`
 
+### compile ignore
+Add a json file named `.staticignore.json` to the root directory of your code to configure compiling.   
+Content of the file is like bellow:  
+
+    {
+      "compileIgnore": [
+        "**/*.min.js",
+        "**/*.min.css"
+      ],
+      "completelyIgnore": [
+        "src/**"
+      ]
+    }
+    
+`compileIgnore` : the files that match it's rules will not be compiled.  
+`completelyIgnore` : the files that match it's rules will be removed completely.  
+
 ### Issues
 If you use react or ES2015, errors may be reported when compiling code
 with `wpb`. In this situation, you should install `babel-preset-react`
