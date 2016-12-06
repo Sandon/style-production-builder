@@ -4,6 +4,6 @@
     "**/*.min.css"
   ],
   "completelyIgnore": [
-    "**/src/**"
+    "src/**"
   ]
 }
