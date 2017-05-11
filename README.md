@@ -36,8 +36,8 @@ Content of the file is like bellow:
       ]
     }
     
-`compileIgnore` : the files that match it's rules will not be compiled.  
-`completelyIgnore` : the files that match it's rules will be removed completely.  
+`compileIgnore` : files that match the rules will not be compiled, and will be in the output directory untouched specified by {{output_path}}.  
+`completelyIgnore` : files that match it's rules will be removed completely from the output directory specified by {{output_path}}.  
 
 ### Issues
 If you use react or ES2015, errors may be reported when compiling code
