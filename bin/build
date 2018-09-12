@@ -4,6 +4,7 @@
 var fs = require('fs');
 var Path = require('path');
 var fileDirUtils = require('../lib/fileDirUtils');
+var version = require('../package.json').version
 
 var nopt = require('nopt');
 var spawn = require('child_process').spawn;
@@ -16,13 +17,15 @@ var argv = process.argv;
 var knownOpts = {
   "input": String,
   "output": String,
-  "help": Boolean
+  "help": Boolean,
+  "version": String,
 };
 
 var shortHands = {
   "i": ["--input"],
   "o": ["--output"],
-  "h": ["--help"]
+  "h": ["--help"],
+  "v": ["--version"],
 };
 
 var getHelpInfo = function () {
@@ -35,12 +38,16 @@ var getHelpInfo = function () {
     '',
     '   -i   | --input               [compulsory] input path',
     '   -o   | --output              [compulsory] output path',
-    '   -h   | --help                help information'
+    '   -h   | --help                help information',
+    '   -v   | --version             check version'
   ].join('\n');
 };
 
 var parsed = nopt( knownOpts, shortHands, argv );
-
+if(parsed.version == ''){
+  console.log(version)
+  return
+}
 if ( parsed.help || !parsed.input || !parsed.output ) {
   console.log( getHelpInfo() );
   return;
