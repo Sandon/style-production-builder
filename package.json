@@ -1,7 +1,7 @@
 {
   "name": "webpack-production-builder",
   "description": "production builder",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "bin": {
     "wpb": "bin/build"
   },
