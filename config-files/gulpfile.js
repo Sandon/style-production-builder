@@ -12,7 +12,7 @@ var inputDir = process.argv[3];
 var outputDir = process.argv[5];
 
 var staticIgnoreFile = Path.resolve(inputDir, './.staticignore.json')
-var compileIgnore, completelyIgnore, allIgnores
+var compileIgnore, completelyIgnore, allIgnores,babelIgnore
 var completelyIgnoreFilterPattern = ["**/*.*"]
 var allIgnoresFilterPattern = ["**/*.*"]
 try {
@@ -20,7 +20,7 @@ try {
   staticIgnore = JSON.parse(staticIgnore)
   compileIgnore = staticIgnore.compileIgnore || []
   completelyIgnore = staticIgnore.completelyIgnore || []
-  
+  babelIgnore = staticIgnore.babelrcIgnore
   compileIgnore = compileIgnore.map(function (item) {
     return '!' + item
   })
@@ -82,12 +82,19 @@ gulp.task('css', function () {
     .pipe(gulp.dest(outputDir));
   //.pipe(notify({ message: 'Scripts task complete' }));
 });*/
+var babelInner = {
+  babelrc: false,
+  presets: ["es2015", "stage-3"]
+}
 gulp.task('scripts', function () {
   var jsFilter = filter(allIgnoresFilterPattern)
   return gulp.src('**/*.js')
     .pipe(jsFilter)
-    .pipe(babel())
-    .pipe(uglify().on('error', gutil.log))
+    .pipe(babel(babelIgnore?babelInner:{}))
+    .pipe(uglify().on('error', function (data) {
+      console.log(data)
+      throw  new Error('uglify file error')
+    }))
     .pipe(gulp.dest(outputDir));
 })
 
